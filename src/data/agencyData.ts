@@ -213,7 +213,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     title: 'Hyper-Growth Short-Form Reel Campaign',
     category: 'Video Editing',
     description: 'A multi-part short-form video series with cinematic sound design, dynamic zooms, retention-engineered hooks, and motion graphics that generated explosive engagement.',
-    image: '/assets/aistudio/IMG-20261116-WA0006_acdd7f18.jpg',
+    image: '/assets/aistudio/selected-video-editing.png',
     tags: ['Reels', 'Motion Design', 'Sound Synthesis'],
     metrics: '+340% View Duration',
     clientType: 'Tech & Lifestyle Creator',
