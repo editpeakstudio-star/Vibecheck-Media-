@@ -235,7 +235,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     title: 'Signature Visual Identity & Social Kit',
     category: 'Graphic Designing',
     description: 'Comprehensive branding system with neon ultraviolet accents, typography guidelines, social carousel templates, and high-CTR thumbnail assets.',
-    image: '/assets/aistudio/IMG-20261116-WA0005_062f2d47.jpg',
+    image: '/assets/aistudio/graphic-design-showcase.png',
     tags: ['Brand Identity', 'Typography', 'Thumbnail Design'],
     metrics: '12.8% Average CTR',
     clientType: 'E-commerce & Brand Founder',
