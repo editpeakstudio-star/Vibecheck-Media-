@@ -79,15 +79,15 @@ export const CustomCursor: React.FC = () => {
         <div
           className={`rounded-full transition-all duration-150 ${
             isClicking
-              ? 'w-2 h-2 bg-[#55C8F5]'
+              ? 'w-2 h-2 bg-[#00D9FF] shadow-[0_0_10px_#00D9FF]'
               : isHovered
-              ? 'w-2.5 h-2.5 bg-[#55C8F5]'
-              : 'w-1.5 h-1.5 bg-[#F8FAFC]'
+              ? 'w-2.5 h-2.5 bg-[#00D9FF] shadow-[0_0_12px_#00D9FF]'
+              : 'w-1.5 h-1.5 bg-[#00D9FF]'
           }`}
         />
       </div>
 
-      {/* Outer sleek trailing ring */}
+      {/* Outer sleek trailing ring with Cyan Glow */}
       <div
         className="fixed pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2"
         style={{
@@ -98,10 +98,10 @@ export const CustomCursor: React.FC = () => {
         <div
           className={`rounded-full transition-all duration-200 ${
             isHovered
-              ? 'w-10 h-10 border border-[#55C8F5]/80 bg-[#55C8F5]/5'
+              ? 'w-10 h-10 border border-[#00D9FF] bg-[#00D9FF]/10 shadow-[0_0_20px_rgba(0,217,255,0.4)]'
               : isClicking
-              ? 'w-6 h-6 border-[#55C8F5] bg-[#55C8F5]/15'
-              : 'w-8 h-8 border border-[#303744] opacity-50'
+              ? 'w-6 h-6 border-[#00D9FF] bg-[#00D9FF]/25 shadow-[0_0_15px_rgba(0,217,255,0.6)]'
+              : 'w-8 h-8 border border-[#1E344A] opacity-60'
           }`}
         />
       </div>

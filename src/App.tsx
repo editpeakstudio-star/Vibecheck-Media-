@@ -44,14 +44,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080A0F] text-[#F8FAFC] font-sans antialiased relative selection:bg-[#55C8F5]/30 selection:text-white">
+    <div className="min-h-screen bg-[#03070D] text-[#F8FAFC] font-sans antialiased relative selection:bg-[#00D9FF]/30 selection:text-white">
       {/* Cinematic 3D Armor Opening Sequence */}
       {showIntro && <CinematicIntro onComplete={handleIntroComplete} />}
 
       {/* Desktop Custom Animated Cursor */}
       <CustomCursor />
 
-      {/* Subtle Purple Energy Particles Web */}
+      {/* Subtle Cyan Energy Particles Web */}
       <BackgroundParticles />
 
       {/* Sticky Futuristic Navbar */}

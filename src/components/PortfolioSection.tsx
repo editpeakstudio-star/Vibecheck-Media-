@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, X, Check, MessageSquare } from 'lucide-react';
+import { Eye, X, Check, MessageSquare, Play, ArrowRight, Star } from 'lucide-react';
 import { PORTFOLIO_PROJECTS, getWhatsAppUrl } from '../data/agencyData';
 import { PortfolioProject } from '../types';
 import { soundManager } from '../utils/audio';
@@ -33,29 +33,26 @@ export const PortfolioSection: React.FC = () => {
   };
 
   return (
-    <section id="portfolio" className="relative py-24 sm:py-32 bg-[#080A0F] border-t border-[#222A36]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="relative py-20 sm:py-28 bg-[#03070D] border-t border-[#1E344A] overflow-hidden">
+      {/* Background Cyan Glow */}
+      <div className="cyan-ambient-glow w-[36rem] h-[36rem] top-10 left-1/3" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 text-left">
           <div className="max-w-2xl">
-            <div className="flex items-center gap-2.5 text-xs font-mono text-kicker tracking-[0.2em] text-[#55C8F5] uppercase mb-3">
-              <span>SELECTED ARCHIVES</span>
-              <span className="text-[#303744]">/</span>
-              <span className="text-[#A7B0C0]">CASE STUDIES</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#080E18] border border-[#1E344A] text-xs font-mono font-bold tracking-wider text-[#00D9FF] mb-4">
+              <span className="w-2 h-2 rounded-full bg-[#00D9FF] shadow-[0_0_8px_#00D9FF]" />
+              <span>SELECTED WORK / ARCHIVE</span>
             </div>
-            <h2 className="text-fluid-section font-extrabold text-[#F8FAFC]">
-              Selected Work.{' '}
-              <br />
-              <span className="text-white">Engineered for </span>
-              <span className="text-shine">
-                Commercial Impact.
-              </span>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-[#F8FAFC]">
+              Selected <span className="text-cyan-glow">Work.</span>
             </h2>
           </div>
 
           {/* Clean Segmented Filter Controls */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-[#10141C] border border-[#222A36]">
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-full bg-[#080E18] border border-[#1E344A]">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -64,10 +61,10 @@ export const PortfolioSection: React.FC = () => {
                   soundManager.playClickSound();
                   setActiveCategory(cat);
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-4 py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer whitespace-nowrap ${
                   activeCategory === cat
-                    ? 'bg-[#1D2430] text-[#55C8F5] border border-[#303744] shadow-sm'
-                    : 'text-[#A7B0C0] hover:text-[#F8FAFC]'
+                    ? 'bg-[#101B2A] text-[#00D9FF] border border-[#00D9FF]/60 shadow-[0_0_15px_rgba(0,217,255,0.3)]'
+                    : 'text-[#B7C4D5] hover:text-[#F8FAFC]'
                 }`}
               >
                 {cat}
@@ -76,24 +73,24 @@ export const PortfolioSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Project Grid */}
+        {/* Project Grid with Reference Card Borders */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="group relative rounded-2xl overflow-hidden bg-[#171B24] border border-[#222A36] hover:border-[#303744] hover:bg-[#1D2430] transition-all duration-300 flex flex-col justify-between"
+              className="reference-card overflow-hidden flex flex-col justify-between group"
             >
               {/* Thumbnail Container */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#10141C]">
+              <div className="relative aspect-[16/10] overflow-hidden bg-[#03070D]">
                 <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#171B24] via-transparent to-transparent opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080E18] via-transparent to-transparent opacity-80" />
 
                 {/* Key Metric Label */}
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-[#080A0F]/85 backdrop-blur-md border border-[#303744] text-[11px] font-mono font-semibold text-[#55C8F5] tabular-nums">
+                <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#080E18]/90 backdrop-blur-md border border-[#1E344A] text-[11px] font-mono font-bold text-[#00D9FF] shadow-[0_0_12px_rgba(0,217,255,0.25)]">
                   {project.metrics}
                 </div>
               </div>
@@ -101,22 +98,22 @@ export const PortfolioSection: React.FC = () => {
               {/* Content Body */}
               <div className="p-6 flex-1 flex flex-col justify-between text-left">
                 <div>
-                  {/* Category & Client Type Unboxed */}
-                  <div className="flex items-center gap-2 text-xs font-mono text-[#A7B0C0] mb-2">
-                    <span className="text-[#55C8F5] font-semibold">{project.category}</span>
-                    <span className="text-[#303744]" aria-hidden="true">·</span>
+                  {/* Category & Client */}
+                  <div className="flex items-center gap-2 text-xs font-mono text-[#B7C4D5] mb-2">
+                    <span className="text-[#00D9FF] font-bold">{project.category}</span>
+                    <span className="text-[#1E344A]" aria-hidden="true">·</span>
                     <span>{project.clientType}</span>
                   </div>
 
-                  <h3 className="text-fluid-card font-bold text-[#F8FAFC] mb-2 group-hover:text-[#55C8F5] transition-colors">
+                  <h3 className="text-xl font-bold text-[#F8FAFC] tracking-tight mb-2 group-hover:text-[#00D9FF] transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#A7B0C0] line-clamp-2 leading-relaxed mb-4 font-normal">
+                  <p className="text-xs sm:text-sm text-[#B7C4D5] line-clamp-2 leading-relaxed mb-4 font-normal">
                     {project.description}
                   </p>
 
                   {/* Clean Tags with Separators */}
-                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#788597] mb-6">
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#8493A8] mb-6">
                     {project.tags.map((tag, idx) => (
                       <span key={idx}>
                         {tag}{idx < project.tags.length - 1 ? ' ·' : ''}
@@ -129,9 +126,9 @@ export const PortfolioSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleOpenProject(project)}
-                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-[#F8FAFC] bg-[#10141C] hover:bg-[#55C8F5] hover:text-[#080A0F] border border-[#303744] hover:border-[#55C8F5] transition-all cursor-pointer font-sans"
+                  className="btn-inquire-pill w-full py-2.5 px-4 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Eye className="w-3.5 h-3.5 text-[#55C8F5] group-hover:text-[#080A0F]" />
+                  <Eye className="w-3.5 h-3.5 text-[#00D9FF]" />
                   <span>View Project Details</span>
                 </button>
               </div>
@@ -142,34 +139,35 @@ export const PortfolioSection: React.FC = () => {
         {/* Project Detail Modal */}
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-2xl rounded-2xl bg-[#171B24] border border-[#303744] p-6 sm:p-8 shadow-2xl shadow-black/80 overflow-y-auto max-h-[90vh] text-left">
+            <div className="relative w-full max-w-2xl reference-card p-6 sm:p-8 overflow-y-auto max-h-[90vh] text-left">
               {/* Close Button */}
               <button
                 type="button"
                 onClick={handleCloseProject}
                 aria-label="Close project modal"
-                className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-[#10141C] border border-[#303744] text-[#A7B0C0] hover:text-[#F8FAFC] hover:border-[#55C8F5] flex items-center justify-center transition-colors cursor-pointer"
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#101B2A] border border-[#1E344A] text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF] flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
 
               {/* Modal Category & Metadata */}
-              <div className="flex items-center gap-2 text-xs font-mono text-[#A7B0C0] mb-3">
-                <span className="text-[#55C8F5] font-semibold">{selectedProject.category}</span>
-                <span className="text-[#303744]" aria-hidden="true">·</span>
+              <div className="flex items-center gap-2 text-xs font-mono text-[#B7C4D5] mb-3">
+                <span className="text-[#00D9FF] font-bold">{selectedProject.category}</span>
+                <span className="text-[#1E344A]" aria-hidden="true">·</span>
                 <span>{selectedProject.clientType}</span>
               </div>
 
               {/* Title & Metric */}
-              <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-[#F8FAFC] tracking-tight mb-2">
+              <h3 className="text-2xl sm:text-3xl font-black text-[#F8FAFC] tracking-tight mb-2">
                 {selectedProject.title}
               </h3>
-              <div className="inline-block px-3 py-1 rounded-lg bg-[#10141C] border border-[#303744] text-xs font-mono text-[#55C8F5] font-semibold mb-6 tabular-nums">
-                Measured Result: {selectedProject.metrics}
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono text-[#00D9FF] font-bold mb-6">
+                <Star className="w-3.5 h-3.5 text-[#00D9FF] fill-[#00D9FF]" />
+                <span>Result: {selectedProject.metrics}</span>
               </div>
 
               {/* Project Preview Image */}
-              <div className="rounded-xl overflow-hidden border border-[#303744] aspect-[16/9] mb-6 relative bg-[#10141C]">
+              <div className="rounded-2xl overflow-hidden border border-[#1E344A] aspect-[16/9] mb-6 relative bg-[#03070D]">
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
@@ -178,19 +176,19 @@ export const PortfolioSection: React.FC = () => {
               </div>
 
               {/* Detailed Description */}
-              <p className="text-sm text-[#A7B0C0] leading-relaxed mb-6 font-normal">
+              <p className="text-sm text-[#B7C4D5] leading-relaxed mb-6 font-normal">
                 {selectedProject.description}
               </p>
 
               {/* Deliverables Checklist */}
               <div className="mb-8">
-                <h4 className="text-xs font-mono text-kicker text-[#55C8F5] mb-3">
+                <h4 className="text-xs font-mono font-bold text-[#00D9FF] uppercase tracking-wider mb-3">
                   Delivered Scope:
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {selectedProject.deliverables.map((item, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs text-[#F8FAFC]">
-                      <Check className="w-3.5 h-3.5 text-[#55C8F5] shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-[#00D9FF] shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
@@ -198,13 +196,13 @@ export const PortfolioSection: React.FC = () => {
               </div>
 
               {/* Direct WhatsApp Call to Action for Similar Project */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-[#222A36]">
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-[#1E344A]">
                 <a
                   href={getWhatsAppUrl(`Hi Ravi & VibeCheck Media! I checked out the "${selectedProject.title}" project on your website and would like a similar solution for my brand.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => soundManager.playClickSound()}
-                  className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-[#080A0F] bg-[#55C8F5] hover:bg-[#72D3F7] glow-cyan-button transition-all cursor-pointer font-sans"
+                  className="btn-primary-cyan w-full sm:w-auto flex-1 py-3 px-6 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <MessageSquare className="w-4 h-4" />
                   <span>Request Similar Project</span>
@@ -213,7 +211,7 @@ export const PortfolioSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCloseProject}
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl text-xs sm:text-sm font-medium text-[#A7B0C0] hover:text-[#F8FAFC] border border-[#303744] bg-[#10141C] transition-colors cursor-pointer font-sans"
+                  className="btn-inquire-pill w-full sm:w-auto px-5 py-3 text-xs sm:text-sm cursor-pointer"
                 >
                   Close
                 </button>

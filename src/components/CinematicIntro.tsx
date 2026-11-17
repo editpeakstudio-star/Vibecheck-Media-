@@ -70,8 +70,8 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
-    scene.background = new THREE.Color(0x080A0F);
-    scene.fog = new THREE.FogExp2(0x080A0F, 0.12);
+    scene.background = new THREE.Color(0x03070D);
+    scene.fog = new THREE.FogExp2(0x03070D, 0.12);
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 7.5);
@@ -93,19 +93,19 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
       return;
     }
 
-    // 1. Ambient & Directional Lighting - Ice Cyan & Steel
-    const ambientLight = new THREE.AmbientLight(0x10141C, 1.6);
+    // 1. Ambient & Directional Lighting - Electric Cyan & Deep Blue
+    const ambientLight = new THREE.AmbientLight(0x080F19, 1.8);
     scene.add(ambientLight);
 
-    const rimLight1 = new THREE.DirectionalLight(0x55C8F5, 2.2);
+    const rimLight1 = new THREE.DirectionalLight(0x00D9FF, 2.5);
     rimLight1.position.set(4, 5, 4);
     scene.add(rimLight1);
 
-    const rimLight2 = new THREE.DirectionalLight(0xA7B0C0, 1.8);
+    const rimLight2 = new THREE.DirectionalLight(0x168BFF, 2.0);
     rimLight2.position.set(-4, -5, 3);
     scene.add(rimLight2);
 
-    const corePointLight = new THREE.PointLight(0x55C8F5, 0.2, 16);
+    const corePointLight = new THREE.PointLight(0x00D9FF, 0.3, 16);
     corePointLight.position.set(0, 0, 0);
     scene.add(corePointLight);
     pointLightRef.current = corePointLight;
@@ -117,10 +117,10 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
     // Inner glowing geometric core
     const coreIcosaGeo = new THREE.IcosahedronGeometry(0.55, 1);
     const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x55C8F5,
+      color: 0x00D9FF,
       wireframe: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
     });
     const coreMesh = new THREE.Mesh(coreIcosaGeo, coreMat);
     coreGroup.add(coreMesh);
@@ -129,8 +129,8 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
     const solidCoreGeo = new THREE.SphereGeometry(0.35, 16, 16);
     const solidCoreMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      emissive: 0x55C8F5,
-      emissiveIntensity: 2.5,
+      emissive: 0x00D9FF,
+      emissiveIntensity: 2.8,
       roughness: 0.1,
       metalness: 0.9,
     });
@@ -140,9 +140,9 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
     // Concentric Precision Rings
     const ring1Geo = new THREE.TorusGeometry(0.9, 0.02, 16, 64);
     const ringMat1 = new THREE.MeshStandardMaterial({
-      color: 0x55C8F5,
-      emissive: 0x55C8F5,
-      emissiveIntensity: 1.8,
+      color: 0x00D9FF,
+      emissive: 0x00D9FF,
+      emissiveIntensity: 2.0,
       roughness: 0.2,
       metalness: 0.8,
     });
@@ -152,9 +152,9 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
     const ring2Geo = new THREE.TorusGeometry(1.2, 0.018, 16, 64);
     const ringMat2 = new THREE.MeshStandardMaterial({
-      color: 0xA7B0C0,
-      emissive: 0x55C8F5,
-      emissiveIntensity: 1.2,
+      color: 0x168BFF,
+      emissive: 0x00D9FF,
+      emissiveIntensity: 1.4,
       roughness: 0.2,
       metalness: 0.9,
     });
@@ -164,14 +164,14 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
     scene.add(coreGroup);
 
-    // 3. Floating Particle Swarm (Cyan, Steel, White)
+    // 3. Floating Particle Swarm (Cyan, Electric Blue, White)
     const particleCount = 220;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
     const particleColors = new Float32Array(particleCount * 3);
 
-    const c1 = new THREE.Color(0x55C8F5);
-    const c2 = new THREE.Color(0xA7B0C0);
+    const c1 = new THREE.Color(0x00D9FF);
+    const c2 = new THREE.Color(0x168BFF);
     const c3 = new THREE.Color(0xffffff);
 
     for (let i = 0; i < particleCount; i++) {
@@ -193,10 +193,10 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.04,
+      size: 0.045,
       vertexColors: true,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending,
     });
 
@@ -210,21 +210,21 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
     const panelAngleStep = (Math.PI * 2) / panelCount;
 
     const armorPlateMaterial = new THREE.MeshStandardMaterial({
-      color: 0x10141C,
-      metalness: 0.92,
-      roughness: 0.28,
+      color: 0x080E18,
+      metalness: 0.94,
+      roughness: 0.25,
     });
 
     const armorGlowEdgeMaterial = new THREE.MeshStandardMaterial({
-      color: 0x55C8F5,
-      emissive: 0x55C8F5,
-      emissiveIntensity: 1.8,
+      color: 0x00D9FF,
+      emissive: 0x00D9FF,
+      emissiveIntensity: 2.2,
       roughness: 0.15,
       metalness: 0.6,
     });
 
     const pistonMaterial = new THREE.MeshStandardMaterial({
-      color: 0x1D2430,
+      color: 0x101B2A,
       metalness: 0.85,
       roughness: 0.3,
     });
@@ -440,7 +440,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#080A0F] transition-opacity duration-700 select-none overflow-hidden ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-[#03070D] transition-opacity duration-700 select-none overflow-hidden ${
         isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -449,21 +449,21 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
       {/* CSS 3D Fallback if WebGL probe fails */}
       {!threeSupported && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#080A0F]">
-          <div className="relative w-72 h-72 rounded-full border border-[#303744] flex items-center justify-center animate-pulse">
-            <div className="w-48 h-48 rounded-full border border-[#55C8F5]/60 flex items-center justify-center">
-              <div className="w-24 h-24 rounded-full bg-[#55C8F5]/20 shadow-2xl shadow-[#55C8F5]/30" />
+        <div className="absolute inset-0 flex items-center justify-center bg-[#03070D]">
+          <div className="relative w-72 h-72 rounded-full border border-[#1E344A] flex items-center justify-center animate-pulse">
+            <div className="w-48 h-48 rounded-full border border-[#00D9FF]/60 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full bg-[#00D9FF]/20 shadow-2xl shadow-[#00D9FF]/40" />
             </div>
           </div>
         </div>
       )}
 
       {/* Vignette Overlay */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_30%,#080A0F_95%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_30%,#03070D_95%)]" />
 
       {/* Top Left Clean Status */}
-      <div className="absolute top-6 left-6 pointer-events-none flex items-center gap-2.5 text-xs font-mono tracking-wider text-[#A7B0C0]">
-        <span className="w-1.5 h-1.5 bg-[#55C8F5] rounded-full inline-block" />
+      <div className="absolute top-6 left-6 pointer-events-none flex items-center gap-2.5 text-xs font-mono tracking-wider text-[#B7C4D5]">
+        <span className="w-2 h-2 bg-[#00D9FF] rounded-full inline-block shadow-[0_0_8px_#00D9FF]" />
         <span>VIBECHECK MEDIA ARCHITECTURE</span>
       </div>
 
@@ -473,29 +473,29 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
           onClick={toggleSound}
           type="button"
           aria-label={isMuted ? 'Unmute sound' : 'Mute sound'}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#171B24]/80 border border-[#303744] text-[#A7B0C0] text-xs font-mono hover:text-[#F8FAFC] hover:border-[#55C8F5]/50 transition-all cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#101B2A]/90 border border-[#1E344A] text-[#B7C4D5] text-xs font-mono hover:text-[#00D9FF] hover:border-[#00D9FF] transition-all cursor-pointer shadow-lg shadow-black/40"
         >
-          {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[#788597]" /> : <Volume2 className="w-3.5 h-3.5 text-[#55C8F5]" />}
+          {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[#8493A8]" /> : <Volume2 className="w-3.5 h-3.5 text-[#00D9FF]" />}
           <span>{isMuted ? 'SOUND OFF' : 'SOUND ON'}</span>
         </button>
 
         <button
           onClick={handleFinish}
           type="button"
-          className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-[#1D2430] border border-[#303744] text-[#F8FAFC] text-xs font-mono font-medium hover:border-[#55C8F5] transition-all cursor-pointer"
+          className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#101B2A]/90 border border-[#1E344A] text-[#F8FAFC] text-xs font-mono font-medium hover:border-[#00D9FF] hover:text-[#00D9FF] transition-all cursor-pointer shadow-lg shadow-black/40"
         >
           <span>SKIP INTRO</span>
-          <FastForward className="w-3.5 h-3.5 text-[#55C8F5]" />
+          <FastForward className="w-3.5 h-3.5 text-[#00D9FF]" />
         </button>
       </div>
 
       {/* HUD Logs */}
       {step === 1 && (
         <div className="absolute inset-x-0 bottom-24 flex flex-col items-center justify-center text-center pointer-events-none px-4 z-10 transition-all duration-300">
-          <p className="text-xs font-mono tracking-widest text-[#55C8F5] uppercase">
+          <p className="text-xs font-mono tracking-widest text-[#00D9FF] uppercase shadow-[0_0_10px_rgba(0,217,255,0.4)]">
             {hudLog}
           </p>
-          <p className="text-[11px] font-mono tracking-wider text-[#788597] mt-1">
+          <p className="text-[11px] font-mono tracking-wider text-[#8493A8] mt-1">
             DIGITAL AGENCY · BRAND ARCHITECTURE
           </p>
         </div>
@@ -503,13 +503,13 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
 
       {step === 2 && (
         <div className="absolute inset-x-0 bottom-24 flex flex-col items-center justify-center text-center pointer-events-none px-4 z-10 transition-all duration-300">
-          <p className="text-xs font-mono tracking-widest text-[#55C8F5] uppercase">
+          <p className="text-xs font-mono tracking-widest text-[#00D9FF] uppercase shadow-[0_0_10px_rgba(0,217,255,0.4)]">
             {hudLog}
           </p>
           <div className="flex items-center gap-2 mt-2">
-            <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#55C8F5]/60" />
-            <span className="text-[11px] font-mono text-[#A7B0C0]">TITANIUM CORE DEPLOYMENT</span>
-            <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-[#55C8F5]/60" />
+            <span className="w-12 h-[1px] bg-gradient-to-r from-transparent to-[#00D9FF]/60" />
+            <span className="text-[11px] font-mono text-[#B7C4D5]">TITANIUM CORE DEPLOYMENT</span>
+            <span className="w-12 h-[1px] bg-gradient-to-l from-transparent to-[#00D9FF]/60" />
           </div>
         </div>
       )}
@@ -518,23 +518,36 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-4 z-10 transition-all duration-500">
           <div className="relative flex flex-col items-center">
             {/* Subtle Cyan Core Glow */}
-            <div className="absolute -inset-10 rounded-full bg-[#55C8F5]/10 blur-3xl" />
+            <div className="absolute -inset-10 rounded-full bg-[#00D9FF]/15 blur-3xl" />
 
             {/* Logo */}
             <div className="relative mb-6 transform scale-110">
-              <img
-                src={BRAND.logoImage}
-                alt="VibeCheck Media Logo"
-                className="w-44 sm:w-60 md:w-72 h-auto object-contain drop-shadow-[0_4px_25px_rgba(85,200,245,0.35)]"
-              />
+              <div className="w-20 h-20 rounded-2xl bg-[#080E18] border border-[#1E344A] p-4 flex items-center justify-center shadow-[0_0_35px_rgba(0,217,255,0.6)] mx-auto mb-4">
+                <svg viewBox="0 0 40 34" className="w-full h-full fill-none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M4 6L18 30L26 15"
+                    stroke="#00D9FF"
+                    strokeWidth="4.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16 6L28 28L36 14"
+                    stroke="#168BFF"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
 
             {/* Tagline */}
             <div className="text-center space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-[#F8FAFC] uppercase">
-                VIBECHECK <span className="text-shine">MEDIA</span>
+              <h2 className="text-2xl sm:text-4xl font-black font-display tracking-tight text-[#F8FAFC] uppercase">
+                VIBECHECK <span className="text-cyan-glow">MEDIA</span>
               </h2>
-              <p className="text-xs sm:text-sm font-mono text-kicker tracking-[0.25em] text-[#A7B0C0] uppercase">
+              <p className="text-xs sm:text-sm font-mono text-kicker tracking-[0.25em] text-[#B7C4D5] uppercase">
                 {BRAND.tagline}
               </p>
             </div>
@@ -543,9 +556,9 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
       )}
 
       {/* Bottom Progress Bar */}
-      <div className="absolute bottom-0 inset-x-0 h-1 bg-[#10141C]">
+      <div className="absolute bottom-0 inset-x-0 h-1 bg-[#080E18]">
         <div
-          className="h-full bg-gradient-to-r from-[#55C8F5] via-[#A7B0C0] to-[#F8FAFC] transition-all duration-100 ease-linear shadow-[0_0_8px_#55C8F5]"
+          className="h-full bg-gradient-to-r from-[#00D9FF] via-[#168BFF] to-[#55C8F5] transition-all duration-100 ease-linear shadow-[0_0_12px_#00D9FF]"
           style={{ width: `${progress * 100}%` }}
         />
       </div>

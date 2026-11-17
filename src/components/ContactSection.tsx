@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, Instagram, Send, Check, AlertCircle } from 'lucide-react';
+import { Mail, MessageSquare, Instagram, Send, Check, AlertCircle, Sparkles } from 'lucide-react';
 import { BRAND, SERVICES } from '../data/agencyData';
 import { ContactFormData } from '../types';
 import { soundManager } from '../utils/audio';
@@ -94,23 +94,25 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="relative py-24 sm:py-32 bg-[#10141C] border-t border-[#222A36]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="contact" className="relative py-20 sm:py-28 bg-[#080F19] border-t border-[#1E344A] overflow-hidden">
+      {/* Background Cyan Glow */}
+      <div className="cyan-ambient-glow w-[36rem] h-[36rem] bottom-10 left-1/4" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16 text-left">
-          <div className="flex items-center gap-2.5 text-xs font-mono text-kicker tracking-[0.2em] text-[#55C8F5] uppercase mb-3">
-            <span>GET IN TOUCH</span>
-            <span className="text-[#303744]">/</span>
-            <span className="text-[#A7B0C0]">INITIATE PROJECT</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono font-bold tracking-wider text-[#00D9FF] mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#00D9FF] shadow-[0_0_8px_#00D9FF]" />
+            <span>GET IN TOUCH / INITIATE PROJECT</span>
           </div>
-          <h2 className="text-fluid-section font-extrabold text-[#F8FAFC] mb-4">
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-[#F8FAFC] leading-tight mb-4">
             Let's Engineer Your{' '}
-            <span className="text-shine">
+            <span className="text-cyan-glow">
               Next Phase of Growth.
             </span>
           </h2>
-          <p className="text-fluid-lead text-[#A7B0C0]">
+          <p className="text-base sm:text-lg text-[#B7C4D5]">
             Have a project, a brand overhaul, or an ambitious growth target? Tell us about it, and we'll craft an actionable plan.
           </p>
         </div>
@@ -120,11 +122,11 @@ export const ContactSection: React.FC = () => {
           
           {/* Left Column: Direct Agency Channels (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-6 text-left">
-            <div className="rounded-2xl p-7 bg-[#171B24] border border-[#222A36] space-y-6">
-              <h3 className="text-fluid-card font-bold text-[#F8FAFC]">
+            <div className="reference-card p-7 sm:p-8 space-y-6">
+              <h3 className="text-xl font-bold text-[#F8FAFC] tracking-tight">
                 Direct Channels
               </h3>
-              <p className="text-xs sm:text-sm text-[#A7B0C0] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#B7C4D5] leading-relaxed">
                 Connect directly with founder Ravi Chauhan and our creative strategy team for rapid responses, custom scopes, or instant discovery chats.
               </p>
 
@@ -134,16 +136,16 @@ export const ContactSection: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => soundManager.playClickSound()}
-                className="group flex items-center gap-4 p-3.5 rounded-xl bg-[#10141C] border border-[#222A36] hover:border-[#55C8F5]/60 hover:bg-[#1D2430] transition-all cursor-pointer"
+                className="group flex items-center gap-4 p-4 rounded-2xl bg-[#101B2A] border border-[#1E344A] hover:border-[#00D9FF] hover:shadow-[0_0_20px_rgba(0,217,255,0.25)] transition-all cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#171B24] border border-[#303744] flex items-center justify-center text-[#55C8F5] shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-[#080E18] border border-[#1E344A] flex items-center justify-center text-[#00D9FF] shrink-0 group-hover:scale-105 transition-transform shadow-[0_0_10px_rgba(0,217,255,0.2)]">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[11px] font-mono text-kicker text-[#788597]">
+                  <span className="text-[11px] font-mono text-[#8493A8]">
                     WhatsApp Direct
                   </span>
-                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#55C8F5] transition-colors">
+                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#00D9FF] transition-colors">
                     {BRAND.whatsappNumber}
                   </span>
                 </div>
@@ -153,16 +155,16 @@ export const ContactSection: React.FC = () => {
               <a
                 href={`mailto:${BRAND.email}`}
                 onClick={() => soundManager.playClickSound()}
-                className="group flex items-center gap-4 p-3.5 rounded-xl bg-[#10141C] border border-[#222A36] hover:border-[#55C8F5]/60 hover:bg-[#1D2430] transition-all cursor-pointer"
+                className="group flex items-center gap-4 p-4 rounded-2xl bg-[#101B2A] border border-[#1E344A] hover:border-[#00D9FF] hover:shadow-[0_0_20px_rgba(0,217,255,0.25)] transition-all cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#171B24] border border-[#303744] flex items-center justify-center text-[#55C8F5] shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-[#080E18] border border-[#1E344A] flex items-center justify-center text-[#00D9FF] shrink-0 group-hover:scale-105 transition-transform shadow-[0_0_10px_rgba(0,217,255,0.2)]">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[11px] font-mono text-kicker text-[#788597]">
+                  <span className="text-[11px] font-mono text-[#8493A8]">
                     Official Inquiries
                   </span>
-                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#55C8F5] transition-colors">
+                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#00D9FF] transition-colors">
                     {BRAND.email}
                   </span>
                 </div>
@@ -174,37 +176,37 @@ export const ContactSection: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => soundManager.playClickSound()}
-                className="group flex items-center gap-4 p-3.5 rounded-xl bg-[#10141C] border border-[#222A36] hover:border-[#55C8F5]/60 hover:bg-[#1D2430] transition-all cursor-pointer"
+                className="group flex items-center gap-4 p-4 rounded-2xl bg-[#101B2A] border border-[#1E344A] hover:border-[#00D9FF] hover:shadow-[0_0_20px_rgba(0,217,255,0.25)] transition-all cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-lg bg-[#171B24] border border-[#303744] flex items-center justify-center text-[#55C8F5] shrink-0 group-hover:scale-105 transition-transform">
+                <div className="w-11 h-11 rounded-xl bg-[#080E18] border border-[#1E344A] flex items-center justify-center text-[#00D9FF] shrink-0 group-hover:scale-105 transition-transform shadow-[0_0_10px_rgba(0,217,255,0.2)]">
                   <Instagram className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[11px] font-mono text-kicker text-[#788597]">
+                  <span className="text-[11px] font-mono text-[#8493A8]">
                     Official Instagram
                   </span>
-                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#55C8F5] transition-colors">
+                  <span className="text-sm font-semibold text-[#F8FAFC] group-hover:text-[#00D9FF] transition-colors">
                     {BRAND.instagramHandle}
                   </span>
                 </div>
               </a>
 
               {/* Response Time Guarantee */}
-              <div className="pt-4 border-t border-[#222A36] flex items-center gap-2 text-xs text-[#A7B0C0]">
-                <Check className="w-4 h-4 text-[#55C8F5]" />
-                <span>Response Time: <strong className="text-[#F8FAFC]">Under 2 Hours</strong></span>
+              <div className="pt-4 border-t border-[#1E344A] flex items-center gap-2 text-xs text-[#B7C4D5]">
+                <Check className="w-4 h-4 text-[#00D9FF]" />
+                <span>Response Time: <strong className="text-[#00D9FF]">Under 2 Hours</strong></span>
               </div>
             </div>
           </div>
 
           {/* Right Column: High-Conversion Validated Inquiry Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="rounded-2xl p-7 sm:p-9 bg-[#171B24] border border-[#303744] shadow-xl shadow-black/50 text-left">
+            <div className="reference-card p-7 sm:p-9 text-left">
               <div className="mb-6">
-                <h3 className="text-fluid-card font-bold text-[#F8FAFC]">
+                <h3 className="text-xl font-bold text-[#F8FAFC] tracking-tight">
                   Project Inquiry Form
                 </h3>
-                <p className="text-xs sm:text-sm text-[#A7B0C0] mt-1">
+                <p className="text-xs sm:text-sm text-[#B7C4D5] mt-1">
                   Fill in your project brief to initiate a structured discussion via WhatsApp.
                 </p>
               </div>
@@ -212,7 +214,7 @@ export const ContactSection: React.FC = () => {
               <form onSubmit={handleSubmit} noValidate className="space-y-5">
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="fullName" className="block text-xs font-mono text-kicker text-[#A7B0C0] mb-1.5">
+                  <label htmlFor="fullName" className="block text-xs font-mono font-semibold text-[#B7C4D5] mb-1.5">
                     Full Name *
                   </label>
                   <input
@@ -222,10 +224,10 @@ export const ContactSection: React.FC = () => {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="e.g. Alex Rivera or Brand Name"
-                    className={`w-full px-4 py-3 rounded-xl bg-[#10141C] border text-[#F8FAFC] text-sm placeholder-[#788597] focus:outline-none transition-colors font-sans ${
+                    className={`w-full px-4 py-3 rounded-xl bg-[#101B2A] border text-[#F8FAFC] text-sm placeholder-[#8493A8] focus:outline-none transition-all font-sans ${
                       errors.fullName
                         ? 'border-red-500 focus:border-red-400'
-                        : 'border-[#303744] focus:border-[#55C8F5]'
+                        : 'border-[#1E344A] focus:border-[#00D9FF] focus:shadow-[0_0_15px_rgba(0,217,255,0.25)]'
                     }`}
                   />
                   {errors.fullName && (
@@ -240,7 +242,7 @@ export const ContactSection: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Email */}
                   <div>
-                    <label htmlFor="email" className="block text-xs font-mono text-kicker text-[#A7B0C0] mb-1.5">
+                    <label htmlFor="email" className="block text-xs font-mono font-semibold text-[#B7C4D5] mb-1.5">
                       Email Address *
                     </label>
                     <input
@@ -250,10 +252,10 @@ export const ContactSection: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="you@company.com"
-                      className={`w-full px-4 py-3 rounded-xl bg-[#10141C] border text-[#F8FAFC] text-sm placeholder-[#788597] focus:outline-none transition-colors font-sans ${
+                      className={`w-full px-4 py-3 rounded-xl bg-[#101B2A] border text-[#F8FAFC] text-sm placeholder-[#8493A8] focus:outline-none transition-all font-sans ${
                         errors.email
                           ? 'border-red-500 focus:border-red-400'
-                          : 'border-[#303744] focus:border-[#55C8F5]'
+                          : 'border-[#1E344A] focus:border-[#00D9FF] focus:shadow-[0_0_15px_rgba(0,217,255,0.25)]'
                       }`}
                     />
                     {errors.email && (
@@ -266,7 +268,7 @@ export const ContactSection: React.FC = () => {
 
                   {/* Phone */}
                   <div>
-                    <label htmlFor="phone" className="block text-xs font-mono text-kicker text-[#A7B0C0] mb-1.5">
+                    <label htmlFor="phone" className="block text-xs font-mono font-semibold text-[#B7C4D5] mb-1.5">
                       Phone / WhatsApp *
                     </label>
                     <input
@@ -276,10 +278,10 @@ export const ContactSection: React.FC = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 73109 68060"
-                      className={`w-full px-4 py-3 rounded-xl bg-[#10141C] border text-[#F8FAFC] text-sm placeholder-[#788597] focus:outline-none transition-colors font-sans ${
+                      className={`w-full px-4 py-3 rounded-xl bg-[#101B2A] border text-[#F8FAFC] text-sm placeholder-[#8493A8] focus:outline-none transition-all font-sans ${
                         errors.phone
                           ? 'border-red-500 focus:border-red-400'
-                          : 'border-[#303744] focus:border-[#55C8F5]'
+                          : 'border-[#1E344A] focus:border-[#00D9FF] focus:shadow-[0_0_15px_rgba(0,217,255,0.25)]'
                       }`}
                     />
                     {errors.phone && (
@@ -293,7 +295,7 @@ export const ContactSection: React.FC = () => {
 
                 {/* Service Selection */}
                 <div>
-                  <label htmlFor="service" className="block text-xs font-mono text-kicker text-[#A7B0C0] mb-1.5">
+                  <label htmlFor="service" className="block text-xs font-mono font-semibold text-[#B7C4D5] mb-1.5">
                     Select a Service *
                   </label>
                   <select
@@ -301,14 +303,14 @@ export const ContactSection: React.FC = () => {
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl bg-[#10141C] border border-[#303744] text-[#F8FAFC] text-sm focus:outline-none focus:border-[#55C8F5] transition-colors cursor-pointer font-sans"
+                    className="w-full px-4 py-3 rounded-xl bg-[#101B2A] border border-[#1E344A] text-[#F8FAFC] text-sm focus:outline-none focus:border-[#00D9FF] focus:shadow-[0_0_15px_rgba(0,217,255,0.25)] transition-all cursor-pointer font-sans"
                   >
                     {SERVICES.map((srv) => (
-                      <option key={srv.id} value={srv.title} className="bg-[#171B24] text-[#F8FAFC]">
+                      <option key={srv.id} value={srv.title} className="bg-[#080E18] text-[#F8FAFC]">
                         {srv.title} ({srv.capabilities[0]})
                       </option>
                     ))}
-                    <option value="Complete Agency Growth Retainer" className="bg-[#171B24] text-[#F8FAFC]">
+                    <option value="Complete Agency Growth Retainer" className="bg-[#080E18] text-[#F8FAFC]">
                       Complete Multi-Service Growth Retainer
                     </option>
                   </select>
@@ -316,7 +318,7 @@ export const ContactSection: React.FC = () => {
 
                 {/* Project Details */}
                 <div>
-                  <label htmlFor="projectDetails" className="block text-xs font-mono text-kicker text-[#A7B0C0] mb-1.5">
+                  <label htmlFor="projectDetails" className="block text-xs font-mono font-semibold text-[#B7C4D5] mb-1.5">
                     Project Brief *
                   </label>
                   <textarea
@@ -326,10 +328,10 @@ export const ContactSection: React.FC = () => {
                     value={formData.projectDetails}
                     onChange={handleChange}
                     placeholder="Tell us about your brand, current challenges, timelines, or commercial targets..."
-                    className={`w-full px-4 py-3 rounded-xl bg-[#10141C] border text-[#F8FAFC] text-sm placeholder-[#788597] focus:outline-none transition-colors resize-y font-sans ${
+                    className={`w-full px-4 py-3 rounded-xl bg-[#101B2A] border text-[#F8FAFC] text-sm placeholder-[#8493A8] focus:outline-none transition-all resize-y font-sans ${
                       errors.projectDetails
                         ? 'border-red-500 focus:border-red-400'
-                        : 'border-[#303744] focus:border-[#55C8F5]'
+                        : 'border-[#1E344A] focus:border-[#00D9FF] focus:shadow-[0_0_15px_rgba(0,217,255,0.25)]'
                     }`}
                   />
                   {errors.projectDetails && (
@@ -340,11 +342,11 @@ export const ContactSection: React.FC = () => {
                   )}
                 </div>
 
-                {/* Submit Action */}
+                {/* Submit Action using btn-primary-cyan */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full inline-flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-[#080A0F] bg-[#55C8F5] hover:bg-[#72D3F7] glow-cyan-button transition-all cursor-pointer disabled:opacity-50 font-sans"
+                  className="btn-primary-cyan w-full py-4 px-6 text-xs sm:text-sm font-bold flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? 'Formatting Inquiry...' : 'Submit Inquiry via WhatsApp'}</span>
@@ -352,13 +354,13 @@ export const ContactSection: React.FC = () => {
 
                 {/* Fallback link if popup is blocked */}
                 {submittedUrl && (
-                  <div className="p-3 rounded-xl bg-[#10141C] border border-[#303744] flex items-center justify-between text-xs text-[#A7B0C0]">
+                  <div className="p-3 rounded-xl bg-[#101B2A] border border-[#1E344A] flex items-center justify-between text-xs text-[#B7C4D5]">
                     <span>Inquiry ready! If WhatsApp did not open automatically:</span>
                     <a
                       href={submittedUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#55C8F5] font-semibold underline hover:text-[#F8FAFC]"
+                      className="text-[#00D9FF] font-semibold underline hover:text-[#F8FAFC]"
                     >
                       Click here to open
                     </a>

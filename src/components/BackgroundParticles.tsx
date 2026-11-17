@@ -14,7 +14,7 @@ export const BackgroundParticles: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Particle settings - subtle, non-intrusive
+    // Particle settings - subtle, non-intrusive cyan atmosphere
     const particleCount = Math.min(Math.floor((width * height) / 28000), 45);
     const particles: Array<{
       x: number;
@@ -26,14 +26,14 @@ export const BackgroundParticles: React.FC = () => {
       color: string;
     }> = [];
 
-    const colors = ['#55C8F5', '#A7B0C0', '#788597'];
+    const colors = ['#00D9FF', '#168BFF', '#55C8F5', '#8493A8'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
         size: Math.random() * 1.5 + 0.8,
         alpha: Math.random() * 0.35 + 0.1,
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -68,7 +68,7 @@ export const BackgroundParticles: React.FC = () => {
 
           if (dist < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(85, 200, 245, ${0.08 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(0, 217, 255, ${0.08 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -121,7 +121,7 @@ export const BackgroundParticles: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-50"
+      className="fixed inset-0 pointer-events-none z-0 opacity-40"
     />
   );
 };

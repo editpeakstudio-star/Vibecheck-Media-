@@ -1,160 +1,238 @@
 import React from 'react';
 import {
-  Video,
-  PenTool,
-  Compass,
-  Palette,
-  Code,
-  Share2,
-  Check,
+  Instagram,
+  Youtube,
+  Film,
+  Megaphone,
+  User,
+  Zap,
+  ChevronRight,
+  Star,
+  Play,
   ArrowRight,
-  ExternalLink,
-  MessageSquare,
+  Palette,
+  Layers,
   Sparkles,
+  Code,
+  Globe,
+  Compass,
+  TrendingUp,
+  PenTool,
+  Share2,
 } from 'lucide-react';
 import { SERVICES, getWhatsAppUrl } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
 
+// 3D Visual Asset Mapping for each service (Bespoke 3D renders matching reference)
+const SERVICE_VISUALS: Record<string, string> = {
+  'video-editing': '/src/assets/images/service_video_3d_1794926031559.jpg',
+  'graphic-designing': '/src/assets/images/service_design_3d_1794926032609.jpg',
+  'web-development': '/src/assets/images/service_web_3d_1794926032984.jpg',
+  'content-strategy': '/src/assets/images/service_growth_3d_1794926033627.jpg',
+  'script-writing': '/src/assets/images/service_script_3d_1794926137660.jpg',
+  'social-media-management': '/src/assets/images/service_social_3d_1794926138017.jpg',
+};
+
+// Feature icon resolver
+const getFeatureIcon = (featureName: string, serviceId: string) => {
+  const lower = featureName.toLowerCase();
+  if (lower.includes('instagram') || lower.includes('reels')) return Instagram;
+  if (lower.includes('youtube')) return Youtube;
+  if (lower.includes('cinematic') || lower.includes('film')) return Film;
+  if (lower.includes('promotional') || lower.includes('marketing') || lower.includes('megaphone')) return Megaphone;
+  if (lower.includes('talking') || lower.includes('head') || lower.includes('profile') || lower.includes('interview')) return User;
+  if (lower.includes('short') || lower.includes('viral') || lower.includes('speed') || lower.includes('hook')) return Zap;
+  if (lower.includes('web') || lower.includes('code') || lower.includes('landing')) return Code;
+  if (lower.includes('design') || lower.includes('thumbnail') || lower.includes('brand')) return Palette;
+  if (lower.includes('strategy') || lower.includes('plan') || lower.includes('calendar')) return Compass;
+  if (lower.includes('script') || lower.includes('story')) return PenTool;
+  if (lower.includes('social') || lower.includes('handling') || lower.includes('community')) return Share2;
+  return Sparkles;
+};
+
 export const ServicesSection: React.FC = () => {
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Video':
-        return Video;
-      case 'PenTool':
-        return PenTool;
-      case 'Compass':
-        return Compass;
-      case 'Palette':
-        return Palette;
-      case 'Code':
-        return Code;
-      case 'Share2':
-        return Share2;
-      default:
-        return Sparkles;
-    }
-  };
-
   return (
-    <section id="services" className="relative py-24 sm:py-32 bg-[#080A0F] border-t border-[#222A36]">
-      {/* Subtle Ambient Backing */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 bg-[#55C8F5]/5 rounded-full blur-[120px] pointer-events-none" />
+    <section id="services" className="relative py-20 sm:py-28 bg-[#03070D] overflow-hidden">
+      {/* Background Cyan Radial Horizons */}
+      <div className="cyan-ambient-glow w-[36rem] h-[36rem] -top-20 left-1/4" />
+      <div className="cyan-ambient-glow w-[38rem] h-[38rem] top-1/2 -right-20" />
+      <div className="cyan-ambient-glow w-[36rem] h-[36rem] -bottom-20 left-1/3" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Cyber Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(30,52,74,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,52,74,0.15)_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-2.5 text-xs font-mono text-kicker tracking-[0.2em] text-[#55C8F5] uppercase mb-3">
-              <span>SPECIALIZED DISCIPLINES</span>
-              <span className="text-[#303744]">/</span>
-              <span className="text-[#A7B0C0]">END-TO-END</span>
-            </div>
-            <h2 className="text-fluid-section font-extrabold text-[#F8FAFC]">
-              Six Core Disciplines.{' '}
-              <br />
-              <span className="text-white">One </span>
-              <span className="text-shine">
-                Unified Growth Engine.
-              </span>
-            </h2>
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#080E18] border border-[#1E344A] text-xs font-mono tracking-widest text-[#00D9FF] mb-4 shadow-[0_0_15px_rgba(0,217,255,0.2)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00D9FF] shadow-[0_0_8px_#00D9FF]" />
+            <span>AGENCY CAPABILITIES</span>
           </div>
 
-          <p className="text-fluid-lead text-[#A7B0C0] max-w-md">
-            Every service is precision-crafted to build unshakeable brand authority and drive genuine, measurable engagement.
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#F8FAFC] leading-[1.1] mb-4">
+            Our Core <span className="text-cyan-glow">Services.</span>
+          </h2>
+          <p className="text-base sm:text-lg text-[#B7C4D5] leading-relaxed">
+            High-converting digital growth, cinematic visual storytelling, and bespoke web architecture designed to make your brand impossible to ignore.
           </p>
         </div>
 
-        {/* 6 Core Service Cards in Asymmetric Bento Architecture */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {SERVICES.map((service) => {
-            const Icon = getIcon(service.icon);
+        {/* Large Futuristic Service Cards Stack (Exact Reference Blueprint) */}
+        <div className="space-y-12 sm:space-y-16">
+          {SERVICES.map((service, idx) => {
+            const visualImage = SERVICE_VISUALS[service.id] || SERVICE_VISUALS['video-editing'];
             const whatsappUrl = getWhatsAppUrl(service.whatsappMessage);
+
+            // Split title for two-tone styling: first word white, remainder in cyan glow
+            const titleParts = service.title.split(' ');
+            const firstWord = titleParts[0];
+            const restOfTitle = titleParts.slice(1).join(' ');
 
             return (
               <div
                 key={service.id}
-                className="group relative rounded-2xl p-7 bg-[#171B24] border border-[#222A36] hover:border-[#303744] hover:bg-[#1D2430] transition-all duration-300 flex flex-col justify-between text-left"
-                onMouseEnter={() => soundManager.playClickSound()}
+                className="reference-card p-6 sm:p-10 lg:p-12 relative overflow-hidden"
               >
-                <div>
-                  {/* Top Header: Index & Icon */}
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-xs font-mono text-kicker font-bold text-[#55C8F5]">
-                      {service.number}. SERVICE
-                    </span>
-                    <div className="w-11 h-11 rounded-xl bg-[#1D2430] border border-[#303744] flex items-center justify-center text-[#55C8F5] group-hover:border-[#55C8F5]/60 transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="text-fluid-card font-bold text-[#F8FAFC] mb-2 group-hover:text-[#55C8F5] transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm text-[#A7B0C0] leading-relaxed mb-6 font-normal">
-                    {service.description}
-                  </p>
-
-                  {/* Capabilities Checklist */}
-                  <div className="space-y-2 mb-8">
-                    {service.capabilities.map((cap, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-xs text-[#F8FAFC]/90">
-                        <Check className="w-3.5 h-3.5 text-[#55C8F5] shrink-0" />
-                        <span className="leading-tight">{cap}</span>
+                {/* Asymmetric 2-Column Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                  
+                  {/* Left Column: Details & Feature Capsule List (7 cols) */}
+                  <div className="lg:col-span-7 flex flex-col justify-between text-left">
+                    
+                    {/* Top Pill Service Badge with Extending Accent Line */}
+                    <div className="flex items-center gap-4 mb-5">
+                      <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono font-bold tracking-wider text-[#00D9FF]">
+                        <span className="w-2 h-2 rounded-full bg-[#00D9FF] shadow-[0_0_8px_#00D9FF]" />
+                        <span>{service.number}. SERVICE</span>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      <span className="hidden sm:block h-px w-24 bg-gradient-to-r from-[#1E344A] to-transparent" />
+                    </div>
 
-                {/* Bottom Card Actions */}
-                <div className="pt-5 border-t border-[#222A36] flex flex-col gap-3.5">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-[#788597]">
-                    <span className="text-[#A7B0C0]">Specialization:</span>
-                    <span className="truncate max-w-[190px] text-[#F8FAFC]">{service.highlight}</span>
+                    {/* Main Bold Title (Exact Reference Typography) */}
+                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-3">
+                      <span className="text-[#F8FAFC]">{firstWord} </span>
+                      <span className="text-cyan-glow">{restOfTitle}</span>
+                    </h3>
+
+                    {/* Supporting Description */}
+                    <p className="text-sm sm:text-base text-[#B7C4D5] max-w-xl leading-relaxed mb-6 font-normal">
+                      {service.description}
+                    </p>
+
+                    {/* Stacked 6 Feature Capsules with Icons and Chevron */}
+                    <div className="space-y-2.5 mb-8">
+                      {service.capabilities.map((cap, cIdx) => {
+                        const CapIcon = getFeatureIcon(cap, service.id);
+                        return (
+                          <div
+                            key={cIdx}
+                            className="feature-capsule group cursor-default"
+                          >
+                            <div className="flex items-center gap-3.5">
+                              {/* Round Icon Badge with Cyan Accent */}
+                              <div className="w-8 h-8 rounded-lg bg-[#080E18] border border-[#1E344A] flex items-center justify-center text-[#00D9FF] shrink-0 group-hover:border-[#00D9FF]/60 group-hover:scale-105 transition-all">
+                                <CapIcon className="w-4 h-4" />
+                              </div>
+                              <span className="text-xs sm:text-sm font-semibold text-[#F8FAFC] group-hover:text-[#00D9FF] transition-colors">
+                                {cap}
+                              </span>
+                            </div>
+
+                            <ChevronRight className="w-4 h-4 text-[#8493A8] group-hover:text-[#00D9FF] group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Bottom Row: Specialization + Inquire Button */}
+                    <div className="pt-6 border-t border-[#1E344A] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      {/* Specialization Info */}
+                      <div>
+                        <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#00D9FF]">
+                          <Star className="w-3.5 h-3.5 text-[#00D9FF] fill-[#00D9FF]" />
+                          <span>Specialization:</span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-[#B7C4D5] mt-0.5">
+                          {service.highlight}
+                        </p>
+                      </div>
+
+                      {/* Direct WhatsApp Pill CTA Button matching reference */}
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => soundManager.playClickSound()}
+                        className="btn-inquire-pill px-5 sm:px-6 py-3 text-xs sm:text-sm flex items-center justify-center gap-2.5 shrink-0 cursor-pointer whitespace-nowrap"
+                      >
+                        <Play className="w-3.5 h-3.5 text-[#00D9FF] fill-[#00D9FF]" />
+                        <span>Inquire {service.title}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#00D9FF]" />
+                      </a>
+                    </div>
+
                   </div>
 
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => soundManager.playClickSound()}
-                    className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-[#F8FAFC] bg-[#10141C] hover:bg-[#55C8F5] hover:text-[#080A0F] border border-[#303744] hover:border-[#55C8F5] transition-all transform hover:-translate-y-0.5 cursor-pointer font-sans"
-                  >
-                    <MessageSquare className="w-4 h-4 text-[#55C8F5] group-hover:text-[#080A0F]" />
-                    <span>Inquire {service.title}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+                  {/* Right Column: 3D Holographic Illustrative Visual (5 cols) */}
+                  <div className="lg:col-span-5 relative flex items-center justify-center">
+                    
+                    {/* Glowing circular backdrop aura */}
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#00D9FF]/20 via-[#168BFF]/15 to-transparent blur-2xl pointer-events-none" />
+
+                    {/* Circular orbital light rings */}
+                    <div className="relative w-full max-w-sm sm:max-w-md aspect-square rounded-3xl overflow-hidden border border-[#1E344A]/80 bg-[#080E18] shadow-[0_0_40px_rgba(0,217,255,0.25)] group">
+                      <img
+                        src={visualImage}
+                        alt={`${service.title} 3D Illustration`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      
+                      {/* Subtle Vignette Scrim */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#080E18] via-transparent to-transparent opacity-60" />
+
+                      {/* Floating holographic corner tag */}
+                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-2 rounded-xl bg-[#101B2A]/90 backdrop-blur-md border border-[#1E344A] text-xs font-mono">
+                        <span className="text-[#00D9FF] font-bold">VIBECHECK STUDIO</span>
+                        <span className="text-[#8493A8]">3D RENDER</span>
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Custom Solution Callout */}
-        <div className="mt-16 p-8 sm:p-10 rounded-2xl bg-[#171B24] border border-[#303744] flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
-          <div className="space-y-1.5 max-w-xl">
-            <div className="flex items-center gap-2 text-xs font-mono text-kicker text-[#55C8F5]">
-              <span>AGENCY RETAINER</span>
+        {/* Custom Multi-Service Retainer Card */}
+        <div className="mt-16 sm:mt-20 reference-card p-8 sm:p-12 text-left relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+            <div className="max-w-2xl space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono text-[#00D9FF]">
+                <Sparkles className="w-3.5 h-3.5 text-[#00D9FF]" />
+                <span>AGENCY GROWTH RETAINER</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#F8FAFC]">
+                Need a Custom <span className="text-cyan-glow">Multi-Service System?</span>
+              </h3>
+              <p className="text-sm sm:text-base text-[#B7C4D5] leading-relaxed">
+                Combine cinematic video editing, custom graphic design, performance web development, and content strategy into a dedicated monthly growth retainer for your brand.
+              </p>
             </div>
-            <h4 className="text-xl sm:text-2xl font-bold font-display text-[#F8FAFC] tracking-tight">
-              Need a Custom Multi-Discipline Growth Retainer?
-            </h4>
-            <p className="text-xs sm:text-sm text-[#A7B0C0] leading-relaxed">
-              Combine video editing, strategic content planning, graphic systems, and web architecture into a unified, dedicated monthly production engine.
-            </p>
-          </div>
 
-          <a
-            href={getWhatsAppUrl(`Hi Ravi & VibeCheck Media! I need a custom multi-service growth retainer for our brand. Let's schedule a consultation!`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => soundManager.playClickSound()}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide text-[#080A0F] bg-[#55C8F5] hover:bg-[#72D3F7] glow-cyan-button transition-all shrink-0 cursor-pointer font-sans"
-          >
-            <span>Inquire Custom Retainer</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+            <a
+              href={getWhatsAppUrl(`Hi Ravi & VibeCheck Media! I need a custom multi-service growth retainer for our brand. Let's schedule a consultation!`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => soundManager.playClickSound()}
+              className="btn-primary-cyan px-6 sm:px-8 py-3.5 text-sm sm:text-base flex items-center justify-center gap-2.5 shrink-0 cursor-pointer whitespace-nowrap"
+            >
+              <span>Inquire Custom Retainer</span>
+              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
+          </div>
         </div>
 
       </div>
