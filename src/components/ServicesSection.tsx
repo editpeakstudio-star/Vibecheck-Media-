@@ -19,6 +19,10 @@ import {
   TrendingUp,
   PenTool,
   Share2,
+  Building2,
+  Smartphone,
+  Box,
+  Video,
 } from 'lucide-react';
 import { SERVICES, getWhatsAppUrl } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
@@ -36,11 +40,15 @@ const SERVICE_VISUALS: Record<string, string> = {
 // Feature icon resolver
 const getFeatureIcon = (featureName: string, serviceId: string) => {
   const lower = featureName.toLowerCase();
-  if (lower.includes('instagram') || lower.includes('reels')) return Instagram;
+  if (lower.includes('instagram') || lower.includes('reel')) return Instagram;
+  if (lower.includes('talking') || lower.includes('head') || lower.includes('interview')) return User;
+  if (lower.includes('motion') || lower.includes('graphics')) return Layers;
+  if (lower.includes('3d') || lower.includes('animation')) return Box;
+  if (lower.includes('ugc')) return Smartphone;
+  if (lower.includes('estate') || lower.includes('real')) return Building2;
   if (lower.includes('youtube')) return Youtube;
   if (lower.includes('cinematic') || lower.includes('film')) return Film;
   if (lower.includes('promotional') || lower.includes('marketing') || lower.includes('megaphone')) return Megaphone;
-  if (lower.includes('talking') || lower.includes('head') || lower.includes('profile') || lower.includes('interview')) return User;
   if (lower.includes('short') || lower.includes('viral') || lower.includes('speed') || lower.includes('hook')) return Zap;
   if (lower.includes('web') || lower.includes('code') || lower.includes('landing')) return Code;
   if (lower.includes('design') || lower.includes('thumbnail') || lower.includes('brand')) return Palette;
