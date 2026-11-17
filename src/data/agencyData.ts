@@ -224,7 +224,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     title: 'Futuristic Web Experience & Landing Engine',
     category: 'Web Development',
     description: 'High-speed, responsive agency web application featuring dark glassmorphism, interactive 3D spatial elements, and conversion-optimized sales funnels.',
-    image: '/assets/aistudio/IMG-20261116-WA0005_062f2d47.jpg',
+    image: '/assets/aistudio/web-development-landing.png',
     tags: ['NextGen Web', 'Tailwind', 'Interactive 3D'],
     metrics: '99/100 Performance Score',
     clientType: 'Digital Agency / SaaS',
