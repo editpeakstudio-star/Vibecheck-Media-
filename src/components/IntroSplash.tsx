@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import VibeCheckLogo from './VibeCheckLogo';
 
 /** Total time the logo stays on screen after the tap (ms). */
-const INTRO_MS = 5600;
+const INTRO_MS = 4200;
 
 export function IntroSplash({ onDone }: { onDone: () => void }) {
   const [leaving, setLeaving] = useState(false);

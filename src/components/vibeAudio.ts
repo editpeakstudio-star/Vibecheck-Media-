@@ -1,5 +1,5 @@
 // @@START
-// Minimal "glass bell" sound: soft sub swell, one airy breath, pentatonic FM bells.
+// Simple, clean intro sound: soft swell, airy draw, one comet swoosh, glass-bell sparkle.
 function playIntroSound(ctx: AudioContext, sp = 1, off = 0) {
   const t0 = ctx.currentTime + 0.1 - off / sp;
   const master = ctx.createGain();
@@ -29,6 +29,24 @@ function playIntroSound(ctx: AudioContext, sp = 1, off = 0) {
     o.start(t0 + t / sp);
     o.stop(t0 + (t + dur) / sp + 0.1);
   };
+  const air = (f0: number, f1: number, t: number, a: number, dur: number, peak: number) => {
+    if (t < off) return;
+    const s = ctx.createBufferSource();
+    const f = ctx.createBiquadFilter();
+    const g = ctx.createGain();
+    s.buffer = nb;
+    s.loop = true;
+    f.type = 'bandpass';
+    f.Q.value = 1.4;
+    f.frequency.setValueAtTime(f0, t0 + t / sp);
+    f.frequency.exponentialRampToValueAtTime(f1, t0 + (t + dur) / sp);
+    env(g, t, a, peak, dur);
+    s.connect(f);
+    f.connect(g);
+    g.connect(master);
+    s.start(t0 + t / sp);
+    s.stop(t0 + (t + dur) / sp + 0.1);
+  };
   const bell = (f: number, t: number, peak: number, dur: number) => {
     if (t < off) return;
     const o = ctx.createOscillator();
@@ -51,34 +69,14 @@ function playIntroSound(ctx: AudioContext, sp = 1, off = 0) {
     m.stop(end);
   };
 
-  // soft sub swell under everything
-  sine(55, 82, 0, 2.5, 6.5, 0.35);
-  // one airy breath across ring draw + arc spin
-  const s = ctx.createBufferSource();
-  const f = ctx.createBiquadFilter();
-  const g = ctx.createGain();
-  s.buffer = nb;
-  s.loop = true;
-  f.type = 'bandpass';
-  f.Q.value = 1.2;
-  f.frequency.setValueAtTime(300, t0 + 0.8 / sp);
-  f.frequency.exponentialRampToValueAtTime(2600, t0 + 5.6 / sp);
-  env(g, 0.8, 3.6, 0.1, 5);
-  s.connect(f);
-  f.connect(g);
-  g.connect(master);
-  if (off < 0.8) {
-    s.start(t0 + 0.8 / sp);
-    s.stop(t0 + 5.9 / sp);
-  }
-  // arcs: ascending D-major-pentatonic glass bells
-  [587, 659, 784, 880, 988, 1175, 1319, 1568].forEach((hz, k) => bell(hz, 3.2 + k * 0.28, 0.16, 1.6));
-  // monogram reveal: soft thum + warm bell chord
-  sine(110, 55, 5.2, 0.01, 1.6, 0.6);
-  [294, 440, 587].forEach((hz) => bell(hz, 5.2, 0.1, 3));
-  // star: high twin bells
-  bell(2349, 6.7, 0.12, 2.5);
-  bell(3136, 6.85, 0.08, 2.5);
+  sine(60, 96, 0, 1.2, 3.4, 0.3); // soft swell under everything
+  air(500, 3200, 0.25, 0.8, 1.1, 0.1); // outline drawing
+  sine(130, 65, 1.1, 0.01, 0.9, 0.45); // letters fill: soft thum
+  air(900, 6000, 1.5, 0.6, 0.9, 0.18); // swoosh sweep
+  sine(500, 2200, 1.5, 0.8, 0.9, 0.07); // comet glide
+  bell(2349, 2.3, 0.14, 2); // star pop
+  bell(3136, 2.42, 0.09, 2);
+  bell(1568, 2.5, 0.07, 1.6); // light sweep sparkle
 }
 // @@END
 export { playIntroSound };
