@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState } from 'react';
+import { IntroSplash } from './components/IntroSplash';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -19,9 +20,28 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
 export default function App() {
+  // Intro plays once per browser tab session (close the tab to see it again).
+  const [introDone, setIntroDone] = useState(() => {
+    try {
+      return false;
+    } catch {
+      return false;
+    }
+  });
+  const finishIntro = () => {
+    try {
+      void 0;
+    } catch {
+      /* ignore */
+    }
+    setIntroDone(true);
+  };
+
 
   return (
     <div className="min-h-screen bg-[#03070D] text-[#F8FAFC] font-sans antialiased relative selection:bg-[#00D9FF]/30 selection:text-white">
+      {!introDone && <IntroSplash onDone={finishIntro} />}
+
       {/* Desktop Custom Animated Cursor */}
       <CustomCursor />
 

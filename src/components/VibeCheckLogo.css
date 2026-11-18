@@ -1,0 +1,49 @@
+.vc-logo {
+  width: min(92vw, 92vh, 760px);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #03030c;
+  box-shadow: 0 0 80px rgba(139, 92, 246, 0.25);
+  contain: layout paint;
+}
+.vc-logo svg { display: block; width: 100%; height: 100%; }
+
+.vc-logo .vc-a { opacity: 0; animation: vc-in 1.2s var(--d, 0s) ease-out forwards; }
+.vc-logo .vc-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: vc-draw 2.6s var(--d, 0s) cubic-bezier(.5, 0, .2, 1) forwards; }
+.vc-logo .vc-rot { transform-origin: 500px 500px; animation: vc-in 1.2s var(--d) ease-out forwards, vc-rotin 4.2s var(--d) cubic-bezier(.2,.7,.2,1) both; }
+.vc-logo .vc-spin { transform-origin: 500px 500px; animation: vc-in 1.2s var(--d) ease-out forwards, vc-spin 90s linear infinite; }
+.vc-logo .vc-mono { transform-origin: 500px 500px; animation: vc-in 1.4s var(--d) ease-out forwards, vc-pop 1.6s var(--d) ease-out both; }
+.vc-logo .vc-sweep { opacity: 0; animation: vc-sweep 1.5s 5.6s ease-in-out forwards; }
+.vc-logo .vc-star { transform-origin: 706px 368px; animation: vc-in 1s var(--d) ease-out forwards, vc-twinkle 3.2s 8s ease-in-out infinite; }
+.vc-logo .vc-p { opacity: 0; animation: vc-pin 1.5s var(--d) ease-out forwards, vc-float var(--t) calc(var(--d) + 1.5s) ease-in-out infinite alternate; }
+
+.vc-logo .vc-arcs { transform-origin: 500px 500px; animation: vc-arcspin 4.4s 3s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes vc-arcspin { from { transform: rotate(-300deg); } to { transform: rotate(0); } }
+.vc-logo.vc-static .vc-arcs { animation: none; }
+@media (prefers-reduced-motion: reduce) { .vc-logo .vc-arcs { animation: none; } }
+@keyframes vc-in { to { opacity: 1; } }
+@keyframes vc-draw { to { stroke-dashoffset: 0; } }
+@keyframes vc-rotin { from { transform: rotate(180deg); } to { transform: rotate(0); } }
+@keyframes vc-spin { to { transform: rotate(360deg); } }
+@keyframes vc-pop { from { transform: scale(0.94); } to { transform: scale(1); } }
+@keyframes vc-sweep { 0% { opacity: 0; transform: translateX(0); } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; transform: translateX(560px); } }
+@keyframes vc-twinkle { 50% { transform: scale(1.18); } }
+@keyframes vc-pin { to { opacity: 0.8; } }
+@keyframes vc-float { to { transform: translate(var(--dx), var(--dy)); } }
+
+/* Instant final state */
+.vc-logo.vc-static .vc-a,
+.vc-logo.vc-static .vc-p { animation: none; opacity: 1; }
+.vc-logo.vc-static .vc-draw { animation: none; stroke-dashoffset: 0; }
+.vc-logo.vc-static .vc-spin { animation: vc-spin 90s linear infinite; }
+.vc-logo.vc-static .vc-rot, .vc-logo.vc-static .vc-mono, .vc-logo.vc-static .vc-star { animation: none; }
+.vc-logo.vc-static .vc-sweep { animation: none; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-logo .vc-a, .vc-logo .vc-p { animation: none; opacity: 1; }
+  .vc-logo .vc-draw { animation: none; stroke-dashoffset: 0; }
+  .vc-logo .vc-rot, .vc-logo .vc-mono, .vc-logo .vc-spin, .vc-logo .vc-star, .vc-logo .vc-sweep { animation: none; }
+  .vc-logo .vc-sweep { opacity: 0; }
+}
