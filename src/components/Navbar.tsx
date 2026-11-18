@@ -3,11 +3,7 @@ import { Menu, X, LayoutGrid, Briefcase, User, Mail, ArrowRight, Play, Volume2, 
 import { BRAND } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
 
-interface NavbarProps {
-  onReplayIntro: () => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro }) => {
+export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('services');
@@ -152,21 +148,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro }) => {
               {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[#8493A8]" /> : <Volume2 className="w-3.5 h-3.5 text-[#00D9FF]" />}
             </button>
 
-            {/* Replay 3D Intro Button */}
-            <button
-              onClick={() => {
-                soundManager.playClickSound();
-                onReplayIntro();
-              }}
-              type="button"
-              title="Replay 3D Opening"
-              aria-label="Replay 3D Opening"
-              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#1E344A] bg-[#101B2A] text-[11px] font-mono text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF]/40 transition-all cursor-pointer"
-            >
-              <Play className="w-3 h-3 text-[#00D9FF] fill-[#00D9FF]/40" />
-              <span>3D INTRO</span>
-            </button>
-
             {/* Glowing Pill "Get in Touch" Button matching reference */}
             <a
               href="#contact"
@@ -214,18 +195,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onReplayIntro }) => {
               })}
 
               <div className="pt-2 border-t border-[#1E344A] flex items-center justify-between gap-2">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onReplayIntro();
-                  }}
-                  type="button"
-                  className="flex items-center gap-2 px-3 py-2 text-xs font-mono text-[#00D9FF] border border-[#1E344A] rounded-xl bg-[#101B2A]"
-                >
-                  <Play className="w-3.5 h-3.5 fill-[#00D9FF]" />
-                  <span>Replay 3D Intro</span>
-                </button>
-
                 <button
                   onClick={toggleSound}
                   type="button"

@@ -3,11 +3,7 @@ import { Mail, Instagram, MessageSquare, ArrowUp, Sparkles } from 'lucide-react'
 import { BRAND, SERVICES, getWhatsAppUrl } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
 
-interface FooterProps {
-  onReplayIntro: () => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onReplayIntro }) => {
+export const Footer: React.FC = () => {
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     soundManager.playClickSound();
@@ -99,16 +95,6 @@ export const Footer: React.FC<FooterProps> = ({ onReplayIntro }) => {
                 <Mail className="w-4 h-4" />
               </a>
 
-              <button
-                type="button"
-                onClick={() => {
-                  soundManager.playClickSound();
-                  onReplayIntro();
-                }}
-                className="px-3 py-1.5 rounded-full bg-[#101B2A] border border-[#1E344A] text-[11px] font-mono text-[#00D9FF] hover:border-[#00D9FF] hover:shadow-[0_0_12px_rgba(0,217,255,0.25)] transition-all cursor-pointer"
-              >
-                Replay 3D Intro
-              </button>
             </div>
           </div>
 
@@ -213,7 +199,7 @@ export const Footer: React.FC<FooterProps> = ({ onReplayIntro }) => {
         {/* Bottom Bar: Copyright & Back-to-Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8493A8]">
           <div>
-            © 2026 VibeCheck Media. All rights reserved. Founder: {BRAND.founder}.
+            © 2026 VibeCheck Media. All rights reserved. Founder: Ravi Chauhan. Developed by: Pintu Kumar.
           </div>
 
           <button

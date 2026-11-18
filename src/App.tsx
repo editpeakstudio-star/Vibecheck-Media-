@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from 'react';
-import { CinematicIntro } from './components/CinematicIntro';
+import React from 'react';
 import { BackgroundParticles } from './components/BackgroundParticles';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -20,34 +19,9 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState<boolean>(true);
-
-  // Check if user already saw intro in current session
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const hasSeen = sessionStorage.getItem('vibecheck_intro_seen');
-      if (hasSeen === 'true') {
-        setShowIntro(false);
-      }
-    }
-  }, []);
-
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('vibecheck_intro_seen', 'true');
-    }
-  };
-
-  const handleReplayIntro = () => {
-    setShowIntro(true);
-  };
 
   return (
     <div className="min-h-screen bg-[#03070D] text-[#F8FAFC] font-sans antialiased relative selection:bg-[#00D9FF]/30 selection:text-white">
-      {/* Cinematic 3D Armor Opening Sequence */}
-      {showIntro && <CinematicIntro onComplete={handleIntroComplete} />}
-
       {/* Desktop Custom Animated Cursor */}
       <CustomCursor />
 
@@ -55,7 +29,7 @@ export default function App() {
       <BackgroundParticles />
 
       {/* Sticky Futuristic Navbar */}
-      <Navbar onReplayIntro={handleReplayIntro} />
+      <Navbar />
 
       {/* Main Agency Sections */}
       <main className="relative z-10 flex flex-col">
@@ -85,7 +59,7 @@ export default function App() {
       </main>
 
       {/* Futuristic Agency Footer */}
-      <Footer onReplayIntro={handleReplayIntro} />
+      <Footer />
 
       {/* Floating WhatsApp and Scroll-to-Top Control */}
       <FloatingWhatsApp />
