@@ -39,6 +39,10 @@ export const FounderSection: React.FC = () => {
                   src={BRAND.founderBannerImage}
                   alt="Ravi Chauhan - Founder of VibeCheck Media"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  loading="eager"
+                  decoding="async"
+                  width="600"
+                  height="600"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#080E18] via-transparent to-transparent opacity-75" />
 

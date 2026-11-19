@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, LayoutGrid, Briefcase, User, Mail, ArrowRight, Play, Volume2, VolumeX } from 'lucide-react';
+import {
+  Menu,
+  X,
+  LayoutGrid,
+  Briefcase,
+  User,
+  Layers,
+  ShieldCheck,
+  Mail,
+  ArrowRight,
+  Volume2,
+  VolumeX,
+} from 'lucide-react';
 import { BRAND } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
 
@@ -9,20 +21,29 @@ export const Navbar: React.FC = () => {
   const [activeSection, setActiveSection] = useState('services');
   const [isMuted, setIsMuted] = useState(soundManager.isMuted());
 
+  // Throttled high-performance scroll listener via requestAnimationFrame
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
 
-      const sections = ['home', 'services', 'portfolio', 'about', 'process', 'founder', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 160 && rect.bottom >= 160) {
-            setActiveSection(section);
-            break;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+
+          const sections = ['home', 'services', 'portfolio', 'about', 'process', 'founder', 'contact'];
+          for (const section of sections) {
+            const el = document.getElementById(section);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= 200 && rect.bottom >= 180) {
+                setActiveSection(section);
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -30,10 +51,13 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 6 Core Menu Items requested: Services, Work, About, Process, Founder, Contact
   const navItems = [
     { label: 'Services', href: '#services', id: 'services', icon: LayoutGrid },
-    { label: 'Portfolio', href: '#portfolio', id: 'portfolio', icon: Briefcase },
+    { label: 'Work', href: '#portfolio', id: 'portfolio', icon: Briefcase },
     { label: 'About', href: '#about', id: 'about', icon: User },
+    { label: 'Process', href: '#process', id: 'process', icon: Layers },
+    { label: 'Founder', href: '#founder', id: 'founder', icon: ShieldCheck },
     { label: 'Contact', href: '#contact', id: 'contact', icon: Mail },
   ];
 
@@ -48,27 +72,32 @@ export const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const navOffset = 84;
+      const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: Math.max(0, elementPosition - navOffset),
+        behavior: 'smooth',
+      });
     }
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-5 pointer-events-none transition-all duration-300">
+    <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none transition-all duration-250">
       <div className="max-w-6xl mx-auto pointer-events-auto">
         <nav
-          className={`rounded-full border border-[#1E344A] px-4 sm:px-6 py-2 sm:py-2.5 transition-all duration-300 flex items-center justify-between gap-4 shadow-[0_0_35px_rgba(0,217,255,0.14)] ${
+          className={`rounded-full border border-[#1E344A] px-3.5 sm:px-5 py-2 transition-all duration-250 flex items-center justify-between gap-3 shadow-[0_0_35px_rgba(0,217,255,0.14)] ${
             scrolled
-              ? 'bg-[#080E18]/92 backdrop-blur-xl shadow-[0_0_45px_rgba(0,217,255,0.22)] border-[#1E344A]/90'
-              : 'bg-[#080E18]/80 backdrop-blur-lg'
+              ? 'bg-[#080E18]/94 backdrop-blur-xl shadow-[0_0_45px_rgba(0,217,255,0.22)] border-[#1E344A]/90'
+              : 'bg-[#080E18]/85 backdrop-blur-lg'
           }`}
         >
-          {/* Brand Logo & Wordmark matching Reference */}
+          {/* Brand Logo & Wordmark */}
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, '#home')}
-            className="flex items-center gap-2.5 sm:gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00D9FF] rounded-full"
+            className="flex items-center gap-2 sm:gap-2.5 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00D9FF] rounded-full"
           >
-            {/* Double-V Futuristic Cyan Icon Mark matching reference */}
+            {/* Double-V Futuristic Cyan Icon Mark */}
             <div className="relative w-8 h-8 rounded-lg flex items-center justify-center p-0.5">
               <svg className="w-7 h-7 drop-shadow-[0_0_8px_rgba(0,217,255,0.8)]" viewBox="0 0 32 32" fill="none">
                 <path
@@ -105,8 +134,8 @@ export const Navbar: React.FC = () => {
             </div>
           </a>
 
-          {/* Navigation Links with Icons (Exact Reference Styling) */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-5 text-xs lg:text-sm font-medium">
+          {/* Desktop Navigation Links (6 All-Inclusive Items) */}
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-medium">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -116,7 +145,7 @@ export const Navbar: React.FC = () => {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all duration-200 cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-250 cursor-pointer ${
                       isActive
                         ? 'bg-[#101B2A] border border-[#1E344A] text-[#00D9FF] shadow-[0_0_15px_rgba(0,217,255,0.2)] font-semibold'
                         : 'text-[#B7C4D5] hover:text-[#F8FAFC] hover:bg-[#101B2A]/50'
@@ -128,7 +157,7 @@ export const Navbar: React.FC = () => {
 
                   {/* Active Underline Glowing Bar */}
                   {isActive && (
-                    <span className="absolute -bottom-1.5 w-7 h-0.5 bg-[#00D9FF] rounded-full shadow-[0_0_10px_#00D9FF]" />
+                    <span className="absolute -bottom-1.5 w-6 h-0.5 bg-[#00D9FF] rounded-full shadow-[0_0_10px_#00D9FF]" />
                   )}
                 </div>
               );
@@ -143,37 +172,37 @@ export const Navbar: React.FC = () => {
               type="button"
               title={isMuted ? 'Turn Sound On' : 'Mute Sound'}
               aria-label={isMuted ? 'Turn Sound On' : 'Mute Sound'}
-              className="hidden lg:flex items-center justify-center w-8 h-8 rounded-full border border-[#1E344A] bg-[#101B2A] text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF]/40 transition-all cursor-pointer"
+              className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full border border-[#1E344A] bg-[#101B2A] text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF]/40 transition-all duration-250 cursor-pointer"
             >
               {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[#8493A8]" /> : <Volume2 className="w-3.5 h-3.5 text-[#00D9FF]" />}
             </button>
 
-            {/* Glowing Pill "Get in Touch" Button matching reference */}
+            {/* Glowing Pill "Get in Touch" Button */}
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
-              className="btn-primary-cyan px-4 sm:px-5 py-2 text-xs sm:text-sm flex items-center gap-2 cursor-pointer whitespace-nowrap"
+              className="btn-primary-cyan px-3.5 sm:px-5 py-2 text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 cursor-pointer whitespace-nowrap"
             >
               <span>Get in Touch</span>
               <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </a>
 
-            {/* Circular Hamburger Menu Button matching reference */}
+            {/* Circular Hamburger Menu Button for Mobile & Tablet */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               type="button"
               aria-label="Toggle navigation menu"
-              className="w-9 h-9 rounded-full bg-[#101B2A] border border-[#1E344A] text-[#F8FAFC] hover:text-[#00D9FF] hover:border-[#00D9FF]/60 flex items-center justify-center cursor-pointer transition-colors"
+              className="lg:hidden w-8.5 h-8.5 rounded-full bg-[#101B2A] border border-[#1E344A] text-[#F8FAFC] hover:text-[#00D9FF] hover:border-[#00D9FF]/60 flex items-center justify-center cursor-pointer transition-colors duration-250"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </nav>
 
-        {/* Mobile Dropdown Menu with matching reference styling */}
+        {/* Mobile Dropdown Menu with all 6 Items */}
         {mobileMenuOpen && (
-          <div className="mt-2 rounded-2xl bg-[#080E18]/95 backdrop-blur-xl border border-[#1E344A] p-4 shadow-[0_0_40px_rgba(0,217,255,0.2)] animate-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col gap-2">
+          <div className="mt-2 rounded-2xl bg-[#080E18]/95 backdrop-blur-xl border border-[#1E344A] p-3 shadow-[0_0_40px_rgba(0,217,255,0.2)] animate-in slide-in-from-top-2 duration-200">
+            <div className="flex flex-col gap-1.5">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.id;
@@ -182,7 +211,7 @@ export const Navbar: React.FC = () => {
                     key={item.id}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-250 ${
                       isActive
                         ? 'bg-[#101B2A] border border-[#00D9FF]/50 text-[#00D9FF] shadow-[0_0_15px_rgba(0,217,255,0.25)]'
                         : 'text-[#B7C4D5] hover:text-white hover:bg-[#101B2A]/40'
@@ -194,15 +223,23 @@ export const Navbar: React.FC = () => {
                 );
               })}
 
-              <div className="pt-2 border-t border-[#1E344A] flex items-center justify-between gap-2">
+              <div className="pt-2 border-t border-[#1E344A] flex items-center justify-between">
                 <button
                   onClick={toggleSound}
                   type="button"
-                  className="flex items-center gap-1.5 px-3 py-2 text-xs font-mono text-[#B7C4D5] border border-[#1E344A] rounded-xl bg-[#101B2A]"
+                  className="flex items-center gap-1.5 px-3 py-2 text-xs font-mono text-[#B7C4D5] border border-[#1E344A] rounded-xl bg-[#101B2A] cursor-pointer"
                 >
-                  {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-[#00D9FF]" />}
-                  <span>{isMuted ? 'Muted' : 'Sound'}</span>
+                  {isMuted ? <VolumeX className="w-3.5 h-3.5 text-[#8493A8]" /> : <Volume2 className="w-3.5 h-3.5 text-[#00D9FF]" />}
+                  <span>{isMuted ? 'Sound Off' : 'Sound On'}</span>
                 </button>
+
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, '#contact')}
+                  className="px-3.5 py-2 text-xs font-mono text-[#00D9FF] font-semibold border border-[#00D9FF]/40 rounded-xl bg-[#101B2A]"
+                >
+                  Initiate Project →
+                </a>
               </div>
             </div>
           </div>

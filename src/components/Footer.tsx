@@ -9,7 +9,12 @@ export const Footer: React.FC = () => {
     soundManager.playClickSound();
     const target = document.querySelector(href);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const navOffset = 84;
+      const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: Math.max(0, elementPosition - navOffset),
+        behavior: 'smooth',
+      });
     }
   };
 

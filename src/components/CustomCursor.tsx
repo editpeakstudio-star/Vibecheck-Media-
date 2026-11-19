@@ -1,39 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const CustomCursor: React.FC = () => {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [followerPos, setFollowerPos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only enable on desktop with fine pointer
+    // Only enable on desktop with fine mouse pointer
     if (typeof window === 'undefined') return;
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
     if (isTouch) return;
 
-    setIsVisible(true);
+    setIsEnabled(true);
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let followerX = -100;
+    let followerY = -100;
+    let rafId: number;
 
     const onMouseMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      }
     };
 
     const onMouseDown = () => setIsClicking(true);
     const onMouseUp = () => setIsClicking(false);
 
-    // Follower damping loop
-    let rafId: number;
+    // Follower damping loop (60/120fps hardware-accelerated without React re-renders)
     const animateFollower = () => {
-      setFollowerPos((prev) => ({
-        x: prev.x + (pos.x - prev.x) * 0.18,
-        y: prev.y + (pos.y - prev.y) * 0.18,
-      }));
+      followerX += (mouseX - followerX) * 0.18;
+      followerY += (mouseY - followerY) * 0.18;
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
+      }
       rafId = requestAnimationFrame(animateFollower);
     };
     rafId = requestAnimationFrame(animateFollower);
 
-    // Check hovered elements
+    // Check hovered interactive elements
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (
@@ -50,10 +61,10 @@ export const CustomCursor: React.FC = () => {
       }
     };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mousemove', handleElementHover);
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mousemove', handleElementHover, { passive: true });
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
+    window.addEventListener('mouseup', onMouseUp, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -62,22 +73,20 @@ export const CustomCursor: React.FC = () => {
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
     };
-  }, [pos.x, pos.y]);
+  }, []);
 
-  if (!isVisible) return null;
+  if (!isEnabled) return null;
 
   return (
     <>
       {/* Precision center dot */}
       <div
-        className="fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-transform duration-75"
-        style={{
-          left: `${pos.x}px`,
-          top: `${pos.y}px`,
-        }}
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] will-change-transform"
+        style={{ transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
       >
         <div
-          className={`rounded-full transition-all duration-150 ${
+          className={`rounded-full transition-all duration-200 ${
             isClicking
               ? 'w-2 h-2 bg-[#00D9FF] shadow-[0_0_10px_#00D9FF]'
               : isHovered
@@ -89,11 +98,9 @@ export const CustomCursor: React.FC = () => {
 
       {/* Outer sleek trailing ring with Cyan Glow */}
       <div
-        className="fixed pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2"
-        style={{
-          left: `${followerPos.x}px`,
-          top: `${followerPos.y}px`,
-        }}
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] will-change-transform"
+        style={{ transform: 'translate3d(-100px, -100px, 0) translate(-50%, -50%)' }}
       >
         <div
           className={`rounded-full transition-all duration-200 ${

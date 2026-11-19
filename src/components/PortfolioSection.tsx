@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Eye, X, Check, MessageSquare, Play, ArrowRight, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { Eye, X, Check, MessageSquare, ArrowRight, Star } from 'lucide-react';
 import { PORTFOLIO_PROJECTS, getWhatsAppUrl } from '../data/agencyData';
 import { PortfolioProject } from '../types';
 import { soundManager } from '../utils/audio';
@@ -32,6 +33,26 @@ export const PortfolioSection: React.FC = () => {
     setSelectedProject(null);
   };
 
+  // Lock background scroll when modal is active and enable Escape key to close
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedProject(null);
+      }
+    };
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedProject]);
+
   return (
     <section id="portfolio" className="relative py-20 sm:py-28 bg-[#03070D] border-t border-[#1E344A] overflow-hidden">
       {/* Background Cyan Glow */}
@@ -61,7 +82,7 @@ export const PortfolioSection: React.FC = () => {
                   soundManager.playClickSound();
                   setActiveCategory(cat);
                 }}
-                className={`px-4 py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-4 py-1.5 rounded-full text-xs font-mono font-semibold transition-all duration-250 cursor-pointer whitespace-nowrap ${
                   activeCategory === cat
                     ? 'bg-[#101B2A] text-[#00D9FF] border border-[#00D9FF]/60 shadow-[0_0_15px_rgba(0,217,255,0.3)]'
                     : 'text-[#B7C4D5] hover:text-[#F8FAFC]'
@@ -86,6 +107,10 @@ export const PortfolioSection: React.FC = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                  loading="eager"
+                  decoding="async"
+                  width="600"
+                  height="375"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#080E18] via-transparent to-transparent opacity-80" />
 
@@ -105,7 +130,7 @@ export const PortfolioSection: React.FC = () => {
                     <span>{project.clientType}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#F8FAFC] tracking-tight mb-2 group-hover:text-[#00D9FF] transition-colors">
+                  <h3 className="text-xl font-bold text-[#F8FAFC] tracking-tight mb-2 group-hover:text-[#00D9FF] transition-colors duration-250">
                     {project.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#B7C4D5] line-clamp-2 leading-relaxed mb-4 font-normal">
@@ -136,91 +161,105 @@ export const PortfolioSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Project Detail Modal */}
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-2xl reference-card p-6 sm:p-8 overflow-y-auto max-h-[90vh] text-left">
-              {/* Close Button */}
+      </div>
+
+      {/* Project Detail Modal rendered via React Portal directly into document.body */}
+      {selectedProject && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md transition-opacity duration-200"
+          onClick={handleCloseProject}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-title"
+        >
+          <div
+            className="relative w-full max-w-2xl reference-card p-6 sm:p-8 overflow-y-auto max-h-[88vh] text-left shadow-2xl shadow-black/90 border border-[#1E344A] bg-[#080E18]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={handleCloseProject}
+              aria-label="Close project modal"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#101B2A] border border-[#1E344A] text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF] flex items-center justify-center transition-colors duration-250 cursor-pointer z-10"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Modal Category & Metadata */}
+            <div className="flex items-center gap-2 text-xs font-mono text-[#B7C4D5] mb-3">
+              <span className="text-[#00D9FF] font-bold">{selectedProject.category}</span>
+              <span className="text-[#1E344A]" aria-hidden="true">·</span>
+              <span>{selectedProject.clientType}</span>
+            </div>
+
+            {/* Title & Metric */}
+            <h3 id="project-modal-title" className="text-2xl sm:text-3xl font-black text-[#F8FAFC] tracking-tight mb-2 pr-10">
+              {selectedProject.title}
+            </h3>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono text-[#00D9FF] font-bold mb-6">
+              <Star className="w-3.5 h-3.5 text-[#00D9FF] fill-[#00D9FF]" />
+              <span>Result: {selectedProject.metrics}</span>
+            </div>
+
+            {/* Project Preview Image */}
+            <div className="rounded-2xl overflow-hidden border border-[#1E344A] aspect-[16/9] mb-6 relative bg-[#03070D]">
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="450"
+              />
+            </div>
+
+            {/* Detailed Description */}
+            <p className="text-sm text-[#B7C4D5] leading-relaxed mb-6 font-normal">
+              {selectedProject.description}
+            </p>
+
+            {/* Deliverables Checklist */}
+            <div className="mb-8">
+              <h4 className="text-xs font-mono font-bold text-[#00D9FF] uppercase tracking-wider mb-3">
+                Delivered Scope:
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {selectedProject.deliverables.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-xs text-[#F8FAFC]">
+                    <Check className="w-3.5 h-3.5 text-[#00D9FF] shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct WhatsApp Call to Action for Similar Project */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-[#1E344A]">
+              <a
+                href={getWhatsAppUrl(`Hi Ravi & VibeCheck Media! I checked out the "${selectedProject.title}" project on your website and would like a similar solution for my brand.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => soundManager.playClickSound()}
+                className="btn-primary-cyan w-full sm:w-auto flex-1 py-3 px-6 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer font-bold"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Request Similar Project</span>
+              </a>
+
               <button
                 type="button"
                 onClick={handleCloseProject}
-                aria-label="Close project modal"
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#101B2A] border border-[#1E344A] text-[#B7C4D5] hover:text-[#00D9FF] hover:border-[#00D9FF] flex items-center justify-center transition-colors cursor-pointer"
+                className="btn-inquire-pill w-full sm:w-auto px-5 py-3 text-xs sm:text-sm cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                Close
               </button>
-
-              {/* Modal Category & Metadata */}
-              <div className="flex items-center gap-2 text-xs font-mono text-[#B7C4D5] mb-3">
-                <span className="text-[#00D9FF] font-bold">{selectedProject.category}</span>
-                <span className="text-[#1E344A]" aria-hidden="true">·</span>
-                <span>{selectedProject.clientType}</span>
-              </div>
-
-              {/* Title & Metric */}
-              <h3 className="text-2xl sm:text-3xl font-black text-[#F8FAFC] tracking-tight mb-2">
-                {selectedProject.title}
-              </h3>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#101B2A] border border-[#1E344A] text-xs font-mono text-[#00D9FF] font-bold mb-6">
-                <Star className="w-3.5 h-3.5 text-[#00D9FF] fill-[#00D9FF]" />
-                <span>Result: {selectedProject.metrics}</span>
-              </div>
-
-              {/* Project Preview Image */}
-              <div className="rounded-2xl overflow-hidden border border-[#1E344A] aspect-[16/9] mb-6 relative bg-[#03070D]">
-                <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Detailed Description */}
-              <p className="text-sm text-[#B7C4D5] leading-relaxed mb-6 font-normal">
-                {selectedProject.description}
-              </p>
-
-              {/* Deliverables Checklist */}
-              <div className="mb-8">
-                <h4 className="text-xs font-mono font-bold text-[#00D9FF] uppercase tracking-wider mb-3">
-                  Delivered Scope:
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {selectedProject.deliverables.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-[#F8FAFC]">
-                      <Check className="w-3.5 h-3.5 text-[#00D9FF] shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Direct WhatsApp Call to Action for Similar Project */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 pt-6 border-t border-[#1E344A]">
-                <a
-                  href={getWhatsAppUrl(`Hi Ravi & VibeCheck Media! I checked out the "${selectedProject.title}" project on your website and would like a similar solution for my brand.`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => soundManager.playClickSound()}
-                  className="btn-primary-cyan w-full sm:w-auto flex-1 py-3 px-6 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Request Similar Project</span>
-                </a>
-
-                <button
-                  type="button"
-                  onClick={handleCloseProject}
-                  className="btn-inquire-pill w-full sm:w-auto px-5 py-3 text-xs sm:text-sm cursor-pointer"
-                >
-                  Close
-                </button>
-              </div>
             </div>
           </div>
-        )}
-
-      </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

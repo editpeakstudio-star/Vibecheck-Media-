@@ -23,6 +23,20 @@
     --font-mono: 'Space Grotesk', ui-monospace, monospace;
   }
 
+  html {
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: #03070D;
@@ -36,6 +50,10 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     letter-spacing: -0.025em;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
   }
 }
 
@@ -53,6 +71,19 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #00D9FF;
+}
+
+/* Exact 0.25s (250ms) Smooth Section Reveal Animations */
+.fade-scroll-section {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-scroll-section.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* Reference Design Gradient & Glowing Text */
@@ -96,14 +127,17 @@
   display: inline-block;
 }
 
-/* Reference Service Card Outer Container with Glowing Border */
+/* Reference Service Card Outer Container with Glowing Border (0.25s smooth transitions) */
 .reference-card {
   background: #080E18;
   border: 1px solid #1E344A;
   border-radius: 2.25rem;
   position: relative;
   box-shadow: 0 0 45px -5px rgba(0, 217, 255, 0.18), inset 0 0 25px -10px rgba(0, 217, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-color, box-shadow;
 }
 
 .reference-card:hover {
@@ -131,7 +165,7 @@
   pointer-events: none;
 }
 
-/* Service Feature Capsule Button */
+/* Service Feature Capsule Button (0.25s smooth transitions) */
 .feature-capsule {
   background: #101B2A;
   border: 1px solid #1E344A;
@@ -140,7 +174,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all 0.2s ease;
+  transition: background-color 0.25s ease,
+              border-color 0.25s ease,
+              transform 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 .feature-capsule:hover {
@@ -150,14 +187,14 @@
   box-shadow: 0 4px 16px -2px rgba(0, 217, 255, 0.15);
 }
 
-/* Glowing Primary Button */
+/* Glowing Primary Button (0.25s smooth transitions & active click feedback) */
 .btn-primary-cyan {
   background: linear-gradient(110deg, #00D9FF 0%, #168BFF 100%);
   color: #03070D;
   font-weight: 700;
   border-radius: 9999px;
   box-shadow: 0 0 25px -2px rgba(0, 217, 255, 0.6);
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
 }
 
 .btn-primary-cyan:hover {
@@ -165,7 +202,11 @@
   transform: translateY(-1px);
 }
 
-/* Secondary Inquiry Button (Dark Capsule with Cyan Outline & Glow) */
+.btn-primary-cyan:active {
+  transform: scale(0.98);
+}
+
+/* Secondary Inquiry Button (0.25s smooth transitions & active click feedback) */
 .btn-inquire-pill {
   background: #101B2A;
   border: 1px solid rgba(0, 217, 255, 0.6);
@@ -173,7 +214,7 @@
   font-weight: 600;
   border-radius: 9999px;
   box-shadow: 0 0 20px -3px rgba(0, 217, 255, 0.35);
-  transition: all 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
 
 .btn-inquire-pill:hover {
@@ -181,6 +222,10 @@
   background: #15263C;
   box-shadow: 0 0 30px 0 rgba(0, 217, 255, 0.65);
   transform: translateY(-1px);
+}
+
+.btn-inquire-pill:active {
+  transform: scale(0.98);
 }
 
 /* Cyan Ambient Horizon & Radial Lighting */
@@ -194,8 +239,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .fade-scroll-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
   .animate-text-shimmer {
     animation: none;
     background-position: 0% center;
+  }
+  .reference-card,
+  .feature-capsule,
+  .btn-primary-cyan,
+  .btn-inquire-pill {
+    transition: none !important;
   }
 }

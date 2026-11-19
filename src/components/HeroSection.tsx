@@ -9,7 +9,12 @@ export const HeroSection: React.FC = () => {
     soundManager.playClickSound();
     const target = document.getElementById(id);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      const navOffset = 84;
+      const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: Math.max(0, elementPosition - navOffset),
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -115,6 +120,10 @@ export const HeroSection: React.FC = () => {
                     src={BRAND.founderBannerImage}
                     alt="Ravi Chauhan - Founder of VibeCheck Media"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    loading="eager"
+                    decoding="async"
+                    width="600"
+                    height="600"
                   />
                   
                   {/* Dark Vignette Scrim */}

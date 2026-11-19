@@ -27,14 +27,14 @@ import {
 import { SERVICES, getWhatsAppUrl } from '../data/agencyData';
 import { soundManager } from '../utils/audio';
 
-// 3D Visual Asset Mapping for each service (Bespoke 3D renders matching reference)
+// 3D Visual Asset Mapping for each service (Optimized ultra-fast WebP renders)
 const SERVICE_VISUALS: Record<string, string> = {
-  'video-editing': '/src/assets/images/service_video_3d_1794926031559.jpg',
-  'graphic-designing': '/src/assets/images/service_design_3d_1794926032609.jpg',
-  'web-development': '/src/assets/images/service_web_3d_1794926032984.jpg',
-  'content-strategy': '/src/assets/images/service_growth_3d_1794926033627.jpg',
-  'script-writing': '/src/assets/images/service_script_3d_1794926137660.jpg',
-  'social-media-management': '/src/assets/images/service_social_3d_1794926138017.jpg',
+  'video-editing': '/src/assets/images/service_video_3d.webp',
+  'graphic-designing': '/src/assets/images/service_design_3d.webp',
+  'web-development': '/src/assets/images/service_web_3d.webp',
+  'content-strategy': '/src/assets/images/service_growth_3d.webp',
+  'script-writing': '/src/assets/images/service_script_3d.webp',
+  'social-media-management': '/src/assets/images/service_social_3d.webp',
 };
 
 // Feature icon resolver
@@ -194,6 +194,10 @@ export const ServicesSection: React.FC = () => {
                         src={visualImage}
                         alt={`${service.title} 3D Illustration`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="eager"
+                        decoding="async"
+                        width="500"
+                        height="500"
                       />
                       
                       {/* Subtle Vignette Scrim */}
